@@ -1,0 +1,158 @@
+/* layout */
+#page-content-wrapper
+{
+	width: 900px;
+}
+#page-content
+{
+	margin: 0px 0px 0px 150px;
+	padding-top: 0px;
+}
+#page-content-p
+{
+	margin: 0px 0px 0px 0px;
+	padding-top: 0px;
+}
+#page-user-bar
+{
+	height: 30px;
+	padding-top: 9px;
+	font-size: 11px;
+	text-align: right;
+	white-space: nowrap;
+}
+#page-user-bar span
+{
+	vertical-align: middle;
+}
+#page-user-name
+{
+	font-weight: bold;
+	margin-right: 6px;
+}
+#page-logout-link
+{
+	margin-right: 12px;
+	background-color: #f0f0f0;
+}
+
+#page-menu
+{
+	position: absolute;
+	top: 84px;
+	left: 0px;
+	width: 141px;
+	white-space: nowrap;
+}
+#page-stats
+{
+	position: absolute;
+	top: 36px;
+	left: 9px;
+	width: 141px;
+}
+.page-stat-item
+{
+	line-height: 1.5em;
+	white-space: nowrap;
+	font-size: 11px;
+	color: gray;
+}
+
+/* miscellaneous */
+.ampm span
+{
+	margin-left: 9px;
+}
+.datetime span,
+.grey
+{
+	color: #777 !important;
+}
+.last-in-group
+{
+	margin-right: 36px !important;
+}
+
+/* menu */
+.menu-section
+{
+	padding-bottom: 9px;
+}
+.menu-section-title
+{
+	margin-bottom: 3px;
+	padding: 6px 0px 3px 9px;
+	font-weight: bold;
+}
+.menu-section-items .menu-item
+{
+	padding-left: 24px !important;
+}
+.menu .current-menu-item
+{
+	background: url(/images/page-menu-background.png) 100% 50% no-repeat;
+}
+.menu .menu-item
+{
+	margin: 3px 0px;
+	padding: 3px 0px 3px 9px;
+}
+
+
+/* calls */
+.missed
+{
+	color: #f00;
+}
+.call-filter-box
+{
+	height: 1.5em;
+	margin: 9px 0px;
+	white-space: nowrap;
+}
+.call-filter-box *
+{
+	vertical-align: middle;
+}
+#simple-call-filter-pane input[type="checkbox"]
+{
+	margin-left: 24px;
+}
+
+#user-name,
+#user-name-hint
+{
+	width: 250px;
+}
+
+/* contact view pane */
+#contact-box
+{
+	margin: 6px 0px 12px 0px;
+	background-color: #f6f6f6;
+	padding: 3px 9px;
+	border: 1px solid #ddd;
+}
+#contact-box table
+{
+	width: auto;
+}
+#contact-box table td
+{
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+#contact-box table .label
+{
+	padding-right: 6px;
+}
+#contact-view #contact-name
+{
+	font-weight: bold;
+	white-space: nowrap;
+}
+#contact-view .label
+{
+	color: #606060;
+}

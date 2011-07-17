@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="robots" content="none" />
+    <title>GTK PBX</title>
+    <link type="text/css" rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.5.custom.css" />
+    <link type="text/css" rel="stylesheet" href="/css/ui.jqgrid.css" />
+    <link type="text/css" rel="stylesheet" href="/css/general.css" />
+    <link type="text/css" rel="stylesheet" href="/css/private.css" />
+    <link type="text/css" rel="stylesheet" href="/css/admin.css" />
+    <link type="text/css" rel="stylesheet" href="/css/jquery.window.css" />
+    <!-- jquery libs-->
+    <script type="text/javascript" src="/lib/external/jquery-1.4.4.min.js"> </script>
+    <script type="text/javascript" src="/lib/external/jquery-ui-1.8.13.custom.min.js"> </script>
+    <script type="text/javascript" src="/lib/external/grid.locale-en.js"> </script>
+     
+    <script type="text/javascript">
+        jQuery.jgrid.no_legacy_api = true;
+    </script>
+    <script type="text/javascript" src="/lib/external/jquery.jqGrid.min.js"> </script>
+    <script type="text/javascript" src="/lib/external/json2.js"> </script>
+    <!-- app libs -->
+    <script type="text/javascript" src="/lib/message-box.js"> </script>
+    <script type="text/javascript" src="/lib/request.js"> </script>
+    <script type="text/javascript" src="/lib/validator.js"> </script>
+    <script type="text/javascript" src="/lib/form-buttons.js"> </script>
+    <script type="text/javascript" src="/lib/form-data.js"> </script>
+    <script type="text/javascript" src="/lib/search-pane.js"> </script>
+    <script type="text/javascript" src="/lib/button-menu.js"> </script>
+    <script type="text/javascript" src="/pages/general.js"> </script>
+    <script type="text/javascript" src="/jquery.window.min.js"> </script>
+    <script type="text/javascript">
+        goApp.account  = <wpart:choose><wpart:when test="{account_info} eq undefined">{}</wpart:when><wpart:otherwise><wpart:lookup key="account_info" /></wpart:otherwise></wpart:choose>;
+    </script>
+    <script type="text/javascript">
+        /*goApp.stats = {
+            connected_now: <wpart:lookup key="stat_connected_now" />,
+            registered_today: <wpart:lookup key="stat_registered_today" />
+        };*/
+	goApp.currentAccountId = <wpart:lookup key="current_account_id" />;
+	goApp.currentOrganizationId = <wpart:lookup key="current_organization_id" />;
+    </script>
+    <script type="text/javascript" src="/pages/private.js"> </script>
+    <script type="text/javascript" src="/pages/admin/admin.js"> </script>
+      
+</head>
+<body class="bodyp">
+    <div id="page-content-wrapper-short">
+        <div id="page-content-p"> 
+            <!-- no JS warning -->
+            <noscript id="no-script-warning">
+                To work this page you have to enable JavaScript and then
+                <a href="javascript:location.reload()">reload</a> the page.
+            </noscript>
+            <script type="text/javascript">
+                $('#no-script-warning').remove();
+            </script>  
+            
+            <!-- infobox -->
+            <table id="infobox" class="message-box ui-helper-hidden"
+                   cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td id="infobox-icon" class="message-box-icon">
+                            <div> </div>
+                        </td>
+                        <td>
+                            <div id="infobox-message"> </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+	    
+            
+            <div id="app-content">
+	
+	    </div>
+            
+	    
+
+	    
+	    
+            <div id="page-footer" class="clear">
+	    <!-- footer //-->
+            </div>
+            
+            <div class="float-clearer"> </div>
+            
+            <!-- alert -->
+            <table id="alert" class="message-box ui-helper-hidden"
+                cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td id="alert-icon"><div> </div> </td>
+                        <td id="alert-message"> </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div id="wait" class="ui-helper-hidden"> </div>            
+        </div>
+        
+    </div>
+    
+<div style="display: none;" id="example" title="My First Ajax Dialog"></div>    
+    
+</body>
+</html>

@@ -1,0 +1,38 @@
+<div id="search-pane"> </div>
+<!-- Account list -->
+<table id="grid"> </table>
+<div id="pager"> </div>
+<div id="page-action-buttons" class="ui-helper-hidden">
+    <button id="button-details" class="last-in-group">Details</button>
+    <div id="button-details-menu" style="display:none">
+        <div id="menu-item-devices">Devices</div>
+        <div id="menu-item-call-history">Call History</div>
+    </div>
+    <button id="button-create">Create</button>
+    <button id="button-edit">Edit</button>
+    <button id="button-activate">Activate</button>
+    <button id="button-inactivate" class="last-in-group">Inactivate</button>
+    <button id="button-delete">Delete</button>
+</div>
+
+<!-- Dialog to edit account -->
+<form id="account" class="ui-helper-hidden">
+    <table class="form" cellpadding="0" cellspacing="0">
+        <col width="130" />
+        <col width="*" />
+        <tbody>
+            <tr>
+                <td class="label">
+                    Organization name:
+                </td>
+                <td>
+                    <input id="name" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td id="edit-buttons" class="buttons" colspan="2">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

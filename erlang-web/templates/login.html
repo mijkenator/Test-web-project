@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>GTKiller PBX</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link type="text/css" rel="stylesheet" href="/css/general.css"/>
+<link type="text/css" rel="stylesheet" href="/css/public.css"/> 
+<link type="text/css" rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.5.custom.css"/> 
+
+<script type="text/javascript" src="/lib/external/jquery-1.4.2.min.js"> </script> 
+<script type="text/javascript" src="/lib/external/jquery-ui-1.8.5.custom.min.js"> </script> 
+<script type="text/javascript" src="/lib/external/json2.js"> </script> 
+<script type="text/javascript" src="/lib/message-box.js"> </script> 
+<script type="text/javascript" src="/lib/request.js"> </script> 
+<script type="text/javascript" src="/lib/validator.js"> </script> 
+<script type="text/javascript" src="/lib/form-buttons.js"> </script> 
+<script type="text/javascript" src="/lib/form-data.js"> </script> 
+<script type="text/javascript" src="/pages/general.js"> </script>
+
+<script type="text/javascript"> 
+    goApp.account  = {};
+</script> 
+<script type="text/javascript" src="/pages/public.js"> </script> 
+<script type="text/javascript" src="/pages/public/admin/admin.js"> </script>
+</head>
+<body>
+<div id="page-content-wrapper"> 
+        <div id="page-content"> 
+            
+            <!--div id="page-header"> 
+                <div id="page-logo"> 
+                    <a href="/" title="Go to home page">GTKiller</a> 
+                </div> 
+                <h1 id="page-title"> 
+                    <span> 
+                        Admin area
+                    </span> 
+                </h1> 
+            </div--> 
+            <br/>
+            <table id="infobox" class="message-box ui-helper-hidden" cellpadding="0" cellspacing="0"> 
+                <tbody> 
+                    <tr> 
+                        <td id="infobox-icon" class="message-box-icon"> 
+                            <div> </div> 
+                        </td> 
+                        <td> 
+                            <div id="infobox-message"> </div> 
+                        </td> 
+                    </tr> 
+                </tbody> 
+            </table> 
+            
+            <!-- login form -->
+
+<form id="login-form" class="alone-form" style="width:350px">
+
+    <table class="form" cellpadding="0" cellspacing="0">
+
+        <col width="72" />
+
+        <col width="*" />
+
+        <tbody>
+
+            <tr>
+
+                <td class="label" str="">
+
+                   Username:
+
+                </td>
+
+                <td class="control">
+
+                    <input type="text" id="admin-login" class="spread" />
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td class="label">
+
+                    Password:
+
+                </td>
+
+                <td class="control">
+
+                    <input type="password" id="admin-password" class="spread" />
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td class="label"> </td>
+
+                <td class="control">
+
+                    <input type="checkbox" id="remember-admin-login" />
+
+                    <label for="remember-admin-login">
+
+                        Remember my username
+
+                    </label>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td id="login-form-buttons" class="buttons" colspan="2">
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</form> 
+            
+            <table id="alert" class="message-box ui-helper-hidden" cellpadding="0" cellspacing="0"> 
+                <tbody> 
+                    <tr> 
+                        <td id="alert-icon"><div> </div> </td> 
+                        <td id="alert-message"> </td> 
+                    </tr> 
+                </tbody> 
+            </table> 
+            
+            <div id="wait" class="ui-helper-hidden"> </div>            
+            
+            <noscript id="no-script-warning"> 
+                To work this page you have to enable JavaScript and then
+                <a href="javascript:location.reload()">reload</a> the page.
+            </noscript> 
+            <script type="text/javascript"> 
+                $('#no-script-warning').remove();
+            </script> 
+        </div> 
+    </div> 
+</body>
+</html>

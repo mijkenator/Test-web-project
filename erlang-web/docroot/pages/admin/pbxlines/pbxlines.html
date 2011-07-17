@@ -1,0 +1,73 @@
+<div id="search-pane"> </div>
+<!-- Account list -->
+<table id="grid"> </table>
+<div id="pager"> </div>
+<div id="page-action-buttons" class="ui-helper-hidden">
+    <button id="button-create">Create</button>
+    <button id="button-edit">Edit</button>
+    <button id="button-activate">Activate</button>
+    <button id="button-inactivate" class="last-in-group">Inactivate</button>
+    <button id="button-delete">Delete</button>
+</div>
+
+<!-- Dialog to edit account -->
+<form id="account" class="ui-helper-hidden">
+    <table class="form" cellpadding="0" cellspacing="0">
+        <col width="130" />
+        <col width="*" />
+        <tbody>
+            <tr style="display:none">
+                <td class="label">
+                    Device:
+                </td>
+                <td>
+                    <input id="device_id" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Name:
+                </td>
+                <td>
+                    <input id="name" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Auth Name:
+                </td>
+                <td>
+                    <input id="auth_name" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Auth password:
+                </td>
+                <td>
+                    <input id="auth_passwd" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Proxy address:
+                </td>
+                <td>
+                    <input id="proxy_addr" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Proxy port:
+                </td>
+                <td>
+                    <input id="proxy_port" type="text" class="spread" maxlength="255" />
+                </td>
+            </tr>
+            <tr>
+                <td id="edit-buttons" class="buttons" colspan="2">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

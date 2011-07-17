@@ -1,0 +1,681 @@
+#page-avatar
+{
+	position: absolute;
+	left: -50px;
+	top: 0px;
+	height: 50px;
+	width: 50px;
+	overflow: hidden;
+	text-align: right;
+}
+#page-avatar-image
+{
+	height: 100%;
+}
+#page-user-bar
+{
+	padding-top: 4px;
+}
+#page-custom-status
+{
+	color: #777;
+}
+#page-custom-status-box
+{
+	display: inline-block;
+	position: relative;
+	max-width: 600px;
+	margin-right: 6px;
+	padding: 3px 6px;
+	background-color: #fff !important;
+	border: 2px solid #dfdfdf;
+	cursor: pointer;
+	text-align: left;
+	font-style: italic;
+}
+#page-custom-status-box img
+{
+	position: absolute;
+	left: 100%;
+	top: 2px;
+}
+#page-custom-status-wrapper
+{
+	display: inline-block;
+	width: 100%;
+	overflow: hidden;
+}
+#page-custom-status-button
+{
+	vertical-align: bottom;
+	cursor: pointer;
+	position: relative;
+	top: -1px;
+}
+
+#email-form,
+#login-form,
+#name-form,
+#password-form
+{
+	width: 400px;
+}
+
+#remove-form
+{
+	margin-top: 6px;
+}
+#remove-form-buttons #remove-button
+{
+	width: auto;
+}
+
+/* roster */
+#roster-wrapper
+{
+	position: relative;
+	height: 400px;
+	width: 500px;
+	margin-top: 6px;
+}
+.roster-pane
+{
+	position: relative;
+	height: 100%;
+	padding-top: 30px;
+}
+.roster-pane-header
+{
+	position: absolute;
+	height: 30px;
+	width: 100%;
+	top: 0px;
+	background-color: #ccc;
+	border-left: 3px solid #ccc;
+	border-right: 3px solid #ccc;
+	padding-left: 9px;
+	line-height: 30px;
+	vertical-align: middle;
+}
+#roster-pane-header .search-pane
+{
+	margin: 0px !important;
+	position: absolute;
+	top: 0px;
+	left: 112px;
+}
+#roster-pane-header-label
+{
+	font-weight: bold;
+}
+.roster-pane-body
+{
+	height: 100%;
+	overflow: auto;
+	border: 6px solid #ccc;
+	border-top: none;
+}
+#roster
+{
+	position: relative;
+	background-color: #f0f0f0;
+}
+#roster-sort-control
+{
+	position: absolute;
+	top: 0px;
+	right: 3px;
+	vertical-align: middle;
+}
+#roster-sort-link
+{
+	margin-right: 3px;
+	padding-right: 12px;
+	background: url(/images/small-black-arrow-down.png) 100% 60% no-repeat;
+	color: #333;
+}
+#roster-sort-menu
+{
+	z-index: 2;
+	white-space: nowrap;
+	margin-left: -18px;
+}
+#roster-sort-menu *
+{
+	line-height: normal;
+}
+#roster-search-icon
+{
+	display: inline-block;
+	position: relative;
+	left: 2px;
+	height: 15px;
+	width: 15px;
+	margin-left: 3px;
+	background: url(/images/search.png) 0% 0% no-repeat;
+}
+#roster-search-input
+{
+	border: 1px inset #ccc;
+}
+
+.avatar-box
+{
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+}
+.avatar-box img
+{
+	height: 100%;
+	margin: 0px auto;
+}
+.rc
+{
+	width: 100%;
+	table-layout: fixed;
+	margin-bottom: 3px;
+}
+.rc .rc-avatar-button,
+.rc .rc-pill-button
+{
+	visibility: hidden;
+}
+.rc td
+{
+	vertical-align: top;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background-color: #fff;
+	font-size: 11px;
+}
+.rc-actions
+{
+	margin-top: 3px;
+}
+.rc-avatar-pane
+{
+	width: 65px;
+	padding: 6px 8px 6px 6px;
+}
+.rc-avatar-wrapper
+{
+	position: relative;
+}
+.rc-avatar-button
+{
+	position: absolute;
+	top: -6px;
+	width: 16px;
+	height: 16px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#roster-group-0 .rc-favorite-button
+{
+	background-image: url(/images/roster/star-gray.png);
+}
+#roster-group-1 .rc-favorite-button
+{
+	background-image: url(/images/roster/star-gold.png);
+}
+#roster-group-0 .rc-favorite-button.rc-hover,
+#roster-group-1 .rc-favorite-button.rc-hover
+{
+	background-image: url(/images/roster/star-gold-hover.png);
+}
+.rc-favorite-button
+{
+	left: -8px;
+}
+.rc-remove-button
+{
+	right: -7px;
+	background-image: url(/images/roster/delete-normal.png);
+}
+.rc-remove-button.rc-hover
+{
+	background-image: url(/images/roster/delete-hover.png);
+}
+.rc-group-head
+{
+	background-color: #efefef;
+	padding: 6px;
+	font-weight: bold;
+	font-size: 13px;
+	color: #777;
+}
+.rc .rc-incoming-button
+{
+	display: none;
+}
+.rc-incoming .rc-incoming-button
+{
+	display: inline;
+}
+.rc-incoming-button
+{
+	margin-top: 5px;
+}
+.rc-info-pane
+{
+	padding-top: 3px !important;
+	padding-left: 6px;
+}
+.rc-no-account .rc-actions
+{
+	display: none;
+}
+.rc-no-account .rc-name
+{
+	color: #ccc;
+}
+.rc-pill-button
+{
+	margin-right: 6px;
+	background-color: #fafafa;
+	border: 1px solid #ccc;
+	padding: 1px 6px 2px 6px;
+	cursor: default;
+	font-size: 11px;
+	color: #777;
+}
+.rc-pill-button-hover
+{
+	border-color: #000 !important;
+	background-color: #fff0a5;
+	color: #000;
+}
+.rc-selected td
+{
+	background-color: #fff0a5 !important;
+}
+.rc-selected .rc-pill-button
+{
+	border-color: #777;
+	color: #333;
+}
+.rc-hover .rc-avatar-button,
+.rc-hover .rc-pill-button,
+.rc-selected .rc-avatar-button,
+.rc-selected .rc-pill-button
+{
+	visibility: visible;
+}
+.rc-selected .rc-pill-button-hover
+{
+	background-color: #ffb90b !important;
+}
+.rc-name
+{
+	font-size: 13px;
+	font-weight: bold;
+}
+.rc-state-pane
+{
+	width: 24px;
+	padding: 0px !important;
+	background-position: 50% 6px;
+	background-repeat: no-repeat !important;
+	background-color: #efefef !important;
+	text-align: center;
+}
+.rc-state-away .rc-state-pane
+{
+	background-image: url(/images/roster/away.png);
+}
+.rc-state-noinfo .rc-state-pane
+{
+	background-image: url(/images/roster/noinfo.png);
+}
+.rc-state-offline .rc-state-pane
+{
+	background-image: url(/images/roster/offline.png);
+}
+.rc-state-online .rc-state-pane
+{
+	background-image: url(/images/roster/online.png);
+}
+.rc-status
+{
+	overflow: hidden;
+	padding: 3px 0px;
+	white-space: nowrap;
+	color: #777;
+}
+
+/* roster tabs */
+#roster-tabs
+{
+	position: absolute;
+	left: 100%;
+	top: 0px;
+	height: 100%;
+	padding-top: 36px;
+}
+#roster-tab-list
+{
+	height: 100%;
+	overflow: auto;
+}
+#rt-all
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-image: url(/images/view-contact.png);
+	background-position: 6px 50%;
+	background-repeat: no-repeat;
+}
+.rt
+{
+	position: relative;
+	height: 30px;
+	min-width: 120px;
+	margin-bottom: 3px;
+	padding: 0px 24px;
+	background-color: #efefef;
+	cursor: default;
+	white-space: nowrap;
+	vertical-align: middle;
+	line-height: 30px;
+	font-weight: bold;
+	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif !important;
+	color: #1c94cd;
+}
+.rt-hover
+{
+	background-color: #fdf5ce;
+}
+.rt-incoming
+{
+	background-image: url(/images/roster/chat.gif);
+	background-position: 4px 50%;
+	background-repeat: no-repeat;
+}
+.rt-selected
+{
+	background-color: #ccc !important;
+	color: #000 !important;
+}
+.rt .rt-close-button
+{
+	display: none;
+}
+.rt-hover .rt-close-button
+{
+	display: block;
+}
+
+/* chat area */
+#chat-area
+{
+	overflow: hidden;
+}
+#chat-pane-header
+{
+	padding-left: 9px;
+	font-weight: bold;
+}
+#chat-close-button,
+.rt-close-button
+{
+	position: absolute;
+	z-index: 1;
+	right: 3px;
+	top: 50%;
+	width: 16px;
+	height: 16px;
+	margin-top: -8px;
+	background: url(/images/chat/chat-tab-close.png) 0px 0px no-repeat;
+}
+.chat-close-button-hover,
+.rt-close-button-hover
+{
+	background-image: url(/images/chat/chat-tab-close-hover.png) !important;
+}
+
+/* chat pane */
+.chp
+{
+	position: relative;
+	height: 100%;
+	padding-bottom: 150px;
+}
+.chp .avatar-box
+{
+	position: absolute;
+	top: 32px;
+	left: 6px;
+}
+.chp-infobox
+{
+	position: relative;
+	padding: 6px 24px 6px 6px;
+	background-color: #fffacd;
+	border-bottom: 1px solid #ccc;
+	font-size: 11px;
+}
+.chp-infobox-button
+{
+	position: absolute;
+	top: 4px;
+	right: 3px;
+	width: 16px;
+	height: 16px;
+	background-image: url(/images/chat/chat-tab-close.png);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+.chp-infobox-button-hover
+{
+	background-image: url(/images/chat/chat-tab-close-hover.png);
+}
+.chp-message
+{
+	width: 100%;
+	table-layout: fixed;
+	border-bottom: 1px solid #ccc;
+}
+.chp-message td
+{
+	padding: 6px;
+	vertical-align: top;
+	font-size: 11px;
+}
+.chp-message-incoming .chp-message-sender
+{
+	color: #1c94cd;
+}
+.chp-message-outgoing td
+{
+	color: #777;
+}
+.chp-message-outgoing.chp-status-d .chp-message-sender
+{
+	background-image: url(/images/chat/msg-delivered.png);
+}
+.chp-message-outgoing.chp-status-s .chp-message-sender
+{
+	background-image: url(/images/chat/msg-sent.png);
+}
+.chp-message-outgoing.chp-status-r .chp-message-sender
+{
+	/*background-image: url(/images/chat/msg-read.png);*/
+}
+.chp-message-sender
+{
+	text-align: right;
+	background-position: 3px 23px;
+	background-repeat: no-repeat;
+}
+.chp-message-text
+{
+	background-color: #fff;
+}
+.chp-message-text p
+{
+	margin: 0px;
+}
+.chp-messages
+{
+	height: 100%;
+	overflow: auto;
+	background-color: #fff;
+}
+.chp-editor
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 150px;
+	width: 100%;
+	background-color: #efefef;
+	padding-top: 30px;
+	padding-left: 62px;
+}
+.chp-editor iframe
+{
+	width: 100%;
+	height: 100%;
+	border: none;
+	background-color: #fff;	
+}
+.chp-sending .chp-toolbar-right
+{
+	background-image: url(/images/spinnerMB-16.gif);
+	background-position: 0px 55%;
+	background-repeat: no-repeat;
+}
+.chp-toolbar
+{
+	position: absolute;
+	top: 0px;
+	height: 30px;
+	padding: 6px 0px;
+	text-align: right;
+}
+.chp-toolbar-left
+{
+	left: 0px;
+	padding-left: 6px;
+}
+.chp-toolbar-right
+{
+	right: 0px;
+	padding-left: 20px;
+}
+.chp-btn
+{
+	display: inline-block;
+	height: 20px;
+	margin-right: 6px;
+	border: 1px solid #ccc;
+	padding: 0px 6px 0px 6px;
+	background-color: #fafafa;
+	font-size: 11px;
+	cursor: default;
+}
+.chp-btn-hover
+{
+	border-color: #fbcb09 !important;
+	background-color: #fff0a5;
+}
+.chp-btn-format
+{
+	width: 24px;
+	line-height: normal;
+	text-align: center;
+}
+.chp-btn-bold
+{
+	margin-right: 2px !important;
+	font-weight: bold;
+}
+.chp-btn-italic
+{
+	margin-right: 2px !important;
+	font-style: italic;
+}
+.chp-btn-underline
+{
+	margin-right: 2px !important;
+	text-decoration: underline;
+}
+.chp-btn-strikethrough
+{
+	margin-right: 12px !important;
+	text-decoration: line-through;
+}
+.chp-btn-smile
+{
+	margin-right: 12px !important;
+	background-image: url(/images/smile.png);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#contact #contact-view
+{
+	width: auto;
+}
+#contact #contact-view .label
+{
+	padding-right: 6px;
+}
+
+#chh-menu
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+	text-align: left;
+}
+
+/* splitters */
+#vert-sizer
+{
+	height: 6px;
+	margin-top: -6px;
+	background: #ccc url(/images/horiz-splitter.png) center no-repeat;
+	cursor: n-resize !important;
+}
+#horz-sizer.ui-draggable-dragging,
+#vert-sizer.ui-draggable-dragging
+{
+	background-color: #ffb90b !important;
+}
+#horz-sizer
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 6px;
+	height: 100%;
+	background: url(/images/vert-splitter.png) center no-repeat;
+	cursor: e-resize !important;
+}
+
+/* smile palette */
+.smpal
+{
+	position: absolute;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	padding: 6px;
+	left: 0px; top: 0px;
+}
+.smpal-btn
+{
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: #fff;
+	border: 1px solid #fff;
+}
+.smpal-btn.ui-state-hover
+{
+	border: 1px solid #fbcb09;
+	background-color: #fdf5ce;
+}

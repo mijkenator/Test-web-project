@@ -1,0 +1,99 @@
+#no-script-warning
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+}
+#product-status
+{
+	padding: 24px 0px;
+	text-align: center;
+	font-size: 16px;
+}
+#product-status a:link
+{
+	color: #0799e5;
+}
+#product-status a:hover
+{
+	color: #999;
+}
+#product-status a:active
+{
+	color: #777;
+}
+
+/* home */
+#home-page-actions
+{
+	padding: 0px;
+}
+
+#download-form
+{
+	display: block;
+	margin: 21px 0px 24px 0px;
+	text-align: center;
+}
+#download-button
+{
+	padding: 0.3em 1em;
+	border: 1px solid #0180c3;
+	background: url(/images/download-bg.jpg) 0px 0px repeat-x #0799e5;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	cursor: pointer;
+}
+.download-button-hover
+{
+	background: url(/images/download-bg-hover.jpg) 0px 0px repeat-x #0180c3 !important;
+}
+#download-button *
+{
+	vertical-align: middle;
+}
+#download-button span
+{
+	position: relative;
+	top: -2px;
+}
+#download-button img
+{
+	margin-left: 6px;
+	width: 6px;
+	height: 12px;
+}
+
+#feedback-form
+{
+	margin-top: 24px;
+}
+
+/* home sections */
+#section-download,
+#section-login,
+#section-user
+{
+	height: 200px;
+	width: 350px;
+}
+#section-download
+{
+	float: left;
+}
+#section-login,
+#section-user
+{
+	float: right;
+}
+#section-user ul,
+#section-user li
+{
+	margin: 3px 0px;
+}
+#section-user ul
+{
+	padding-left: 18px;
+}
