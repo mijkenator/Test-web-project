@@ -1,8 +1,0 @@
-run_erl [13245] Thu Jul  7 14:34:44 2011
-Args before exec of shell:
-run_erl [13245] Thu Jul  7 14:34:44 2011
-argv[0] = sh
-run_erl [13245] Thu Jul  7 14:34:44 2011
-argv[1] = -c
-run_erl [13245] Thu Jul  7 14:34:44 2011
-argv[2] = exec /home/ashim/work/pbx/erlang-web/bin/start_erl /home/ashim/work/pbx/erlang-web /home/ashim/work/pbx/erlang-web/releases /home/ashim/work/pbx/erlang-web/releases/start_erl.data
