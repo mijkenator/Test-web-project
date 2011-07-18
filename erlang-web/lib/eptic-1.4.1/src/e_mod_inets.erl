@@ -27,7 +27,7 @@
 -export([cookie_up/1, cookie_bind/1, cleanup/0]).
 -export([parse_post/1, parse_get/1, fetch_boundary/1, format_response/1]).
 
--include_lib("/usr/lib64/erlang/lib/inets-5.5.1/src/http_server/httpd.hrl").
+-include_lib("./lib/inets-5.5.1/src/http_server/httpd.hrl").
 -include_lib("eptic/include/eptic.hrl").
 
 %%====================================================================
