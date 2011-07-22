@@ -3,10 +3,11 @@
 -extends(controller_crud).
 
 -export([
-    create/0,
-    update/0,
-    delete/0,
-    select/0
+    handle/1,
+    get/1,
+    add/1,
+    delete/1,
+    update/1
 ]).
 
 -include("account.hrl").
@@ -16,43 +17,128 @@
 -include("constants.hrl").
 -include("utils_controller_annotations.hrl").
 
-%%%
-%%% Controller JSON-actions.
-%%%
+?PROCESS_RESPONSE({}).  
+?AUTHORIZE(json).    
+handle(_Args) ->
+    RequestJSON = jsonutils:decode(wpart:fget("post:request")),
+    [Command|_] = jsonutils:get_attribute(RequestJSON, ?JSON_COMMANDS),
+    Response = {struct, [{?JSON_COMMANDS, action(jsonutils:get_attribute(Command, <<"type">>))}]},
+    wpart:fset(?KEY_RESPONSE, Response).
+    
+action(A) ->
+    {struct,[
+	{?JSON_TYPE, utils:to_binary(A)},
+	{<<"error">>, <<"unexpected action">>}]}.
 
-%%
-%%
-?PREPARE_DATA({}).
-?VALIDATE_DATA({}).
-create() -> ?BASE_MODULE:create().
+?AUTHORIZE(json).    
+get(_Args) ->
+    console:log(["ACD RULES GET"]),
+    AcdtId = utils:to_list(proplists:get_value(id, _Args)),
+    console:log(["ACD RULES GET: ", AcdtId]),
+    
+    Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    
+    console:log(["ACD RULES GET: Records: ", Records]),
 
-%%
-%%
-?AUTHORIZE(json).
-?CHECK_EXISTENCE({}).
-?PREPARE_DATA({}).
-update() ->
-    console:log(["Action executed MT1:", {?MODULE, update}], 'DEBUG'),
-    console:log(["update, BASE_MODULE:", ?BASE_MODULE], 'DEBUG'),
-    ?BASE_MODULE:update().
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, Name, TP, P, A} <- Records]}
+    ]},
 
-%%
-%%
-?AUTHORIZE(json).
-?CHECK_EXISTENCE({}).
-delete() -> ?BASE_MODULE:delete().
+    {content, text, mochijson2:encode(FR)}.
+    
+?AUTHORIZE(json).    
+add(_Args) ->
+    console:log(["ACD RULES ADD"]),
+    AcdtId      = proplists:get_value(id, _Args),
+    Active      = wpart:fget("post:active"),
+    Name        = wpart:fget("post:name"),
+    Priority    = wpart:fget("post:priority"),
+    TimePeriod  = wpart:fget("post:time_period"),
+    
+    ACDR = wtype_acd_rules:create(#acd_rules{
+        acd_id      = AcdtId,
+        name        = Name,
+        time_period = TimePeriod,
+        priority    = Priority,
+        active      = Active
+    }),
+    
+    console:log(["NEW ACDR: ", ACDR]),
+    
+    Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    
+    console:log(["ACD RULES GET: Records: ", Records]),
 
-?AUTHORIZE(json).
-select() ->
-    console:log(["Action executed:", {?MODULE, select}], 'DEBUG'),
-    Command = wpart:fget(?KEY_COMMAND_JSON),
-    RawFields = jsonutils:get_attribute(Command, ?TO_JSON_NAME(fields)),
-    Fields = case RawFields of
-        undefined -> {exclude, []};
-        Value     -> {fields, Value}
-    end,
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, Name, TP, P, A} <- Records]}
+    ]},
 
-    Rows = ?BASE_MODULE:get_rows(),
-    FormattedRows = utils:format(acd_rules, Rows, Fields),
+    {content, text, mochijson2:encode(FR)}.
 
-    ?BASE_MODULE:process_selected_rows(FormattedRows).
+?AUTHORIZE(json).    
+delete(_Args) ->
+    console:log(["ACD RULES ADD"]),
+    AcdtId      = proplists:get_value(id, _Args),
+    ID          = wpart:fget("post:id"),
+    
+    wtype_acd_rules:delete(utils:to_integer(ID)),
+    
+    Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    
+    console:log(["ACD RULES GET: Records: ", Records]),
+
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, Name, TP, P, A} <- Records]}
+    ]},
+
+    {content, text, mochijson2:encode(FR)}.
+
+
+?AUTHORIZE(json).    
+update(_Args) ->
+    console:log(["ACD RULES ADD"]),
+    AcdtId      = proplists:get_value(id, _Args),
+    ID          = wpart:fget("post:id"),
+    Active      = wpart:fget("post:active"),
+    Name        = wpart:fget("post:name"),
+    Priority    = wpart:fget("post:priority"),
+    TimePeriod  = wpart:fget("post:time_period"),
+    
+    ACDR = wtype_acd_rules:update(#acd_rules{
+        id          = utils:to_integer(ID),
+        acd_id      = AcdtId,
+        name        = Name,
+        time_period = TimePeriod,
+        priority    = Priority,
+        active      = Active
+    }),
+    
+    Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    
+    console:log(["ACD RULES GET: Records: ", Records]),
+
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, Name, TP, P, A} <- Records]}
+    ]},
+
+    {content, text, mochijson2:encode(FR)}.
