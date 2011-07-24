@@ -176,29 +176,77 @@ function create_acdrule_grid(rule_id){
 	jQuery("#list6").jqGrid({        
 		url:'/json/accounts/acd/rules/'+rule_id,
 		datatype: "json",
-		colNames:['ID', 'Order', 'Forward type', 'Number', 'Timeout', 'Active'],
+		colNames:['ID', 'Priority', 'Name', 'Time Period', 'Active'],
 		colModel:[
 			{name:'id',index:'id', width:50},
-			{name:'order',index:'order', width:50},
-			{name:'forward_type',index:'forward_type', width:210},
-			{name:'number',index:'number', width:210, align:"right"},
-			{name:'timeout',index:'timeout', width:60, align:"right"},		
-			{name:'active',index:'active', width:60,align:"right"}		
+			{name:'priority',index:'order', width:100, editable:true, editrules:{required:true, integer:true}},
+			{name:'name',index:'forward_type', width:230, editable:true, editrules:{required:true}},
+			{name:'time_period',index:'number', width:230, align:"right", editable:true, edittype:"select", editoptions:{ value: "* * * * *:Always" },editrules:{required:true}},
+			{name:'active',index:'active', width:60,align:"right", editable:true, edittype:"checkbox", editrules:{required:true}}		
 		],
 		rowNum:10,
-		//rowList:[10,20,30],
+		rowList:[10,20,30],
 		pager: '#pager6',
 		sortname: 'id',
 		viewrecords: true,
 		sortorder: "desc",
-		onSortCol: function(name,index){ alert("Column Name: "+name+" Column Index: "+index);},
-		ondblClickRow: function(id){ alert("You double click row with id: "+id);},
-		height: 350
+		onSelectRow: function(ids) {
+			if(ids == null) {
+				ids=0;
+				if(jQuery("#list10_d").jqGrid('getGridParam','records') >0 )
+				{
+					jQuery("#list10_d").jqGrid('setGridParam',{url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1});
+					jQuery("#list10_d").jqGrid('setCaption',"Invoice Detail: "+ids)
+					.trigger('reloadGrid');
+				}
+			} else {
+				jQuery("#list10_d").jqGrid('setGridParam',{url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1});
+				jQuery("#list10_d").jqGrid('setCaption',"Invoice Detail: "+ids)
+				.trigger('reloadGrid');			
+			}
+		},
+		height: 150
 	});
-	jQuery("#list6").jqGrid('navGrid',"#pager6",{edit:false,add:false,del:false});
-	
-	
-	
+	jQuery("#list6").jqGrid('navGrid',"#pager6",{edit:true,add:true,del:true},
+		{
+			zIndex:1234,
+			closeAfterEdit:true,
+			closeOnEscape:true,
+			url: '/json/accounts/acd/rules/'+rule_id+'/update'
+		},
+		{
+			closeAfterAdd:true,
+			saveData: "Data has been changed! Save changes?",
+			zIndex:1234,
+			url: '/json/accounts/acd/rules/'+rule_id+'/add',
+			closeOnEscape:true
+		},
+		{
+			closeOnEscape:true,
+			zIndex:1234,
+			url: '/json/accounts/acd/rules/'+rule_id+'/delete'
+		},
+		{},{});
+	jQuery("#list10_d").jqGrid({
+		height: 100,
+		datatype: "json",
+		colNames:['No','Item', 'Qty', 'Unit','Line Total'],
+		colModel:[
+			{name:'num',index:'num', width:55},
+			{name:'item',index:'item', width:180},
+			{name:'qty',index:'qty', width:80, align:"right"},
+			{name:'unit',index:'unit', width:80, align:"right"},		
+			{name:'linetotal',index:'linetotal', width:80,align:"right", sortable:false, search:false}
+		],
+		rowNum:5,
+		rowList:[5,10,20],
+		pager: '#pager10_d',
+		sortname: 'item',
+		viewrecords: true,
+		sortorder: "asc",
+		multiselect: true
+	}).navGrid('#pager10_d',{add:false,edit:false,del:false});
+
 }
 
 

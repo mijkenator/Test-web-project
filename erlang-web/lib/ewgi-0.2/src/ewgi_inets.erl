@@ -26,7 +26,7 @@
 
 -export([do/1]).
 
--include_lib("/usr/lib64/erlang/lib/inets-5.5.1/src/http_server/httpd.hrl").
+-include_lib("./lib/inets-5.5.1/src/http_server/httpd.hrl").
 -include_lib("ewgi.hrl").
 
 do(A) ->
