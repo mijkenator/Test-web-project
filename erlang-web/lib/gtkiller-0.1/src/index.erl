@@ -73,4 +73,5 @@ acdrules(_Args) ->
 
 render(Tpl) ->
     wpart:fset("account_info", jsonutils:encode(wtype_account:get_sessioned_account_structure())),
+    wpart:fset("current_host_port", config:get(http_host)++":"++integer_to_list(config:get(http_port))),
     {template, "pages/" ++ Tpl ++ "/" ++ Tpl ++ ".html"}.

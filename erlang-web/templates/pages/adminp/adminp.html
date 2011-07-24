@@ -34,6 +34,8 @@
     <script type="text/javascript" src="/jquery.window.min.js"> </script>
     <script type="text/javascript">
         goApp.account  = <wpart:choose><wpart:when test="{account_info} eq undefined">{}</wpart:when><wpart:otherwise><wpart:lookup key="account_info" /></wpart:otherwise></wpart:choose>;
+        goApp.currentHostPort = "<wpart:lookup key="current_host_port" />";
+        
     </script>
     <script type="text/javascript">
         /*goApp.stats = {

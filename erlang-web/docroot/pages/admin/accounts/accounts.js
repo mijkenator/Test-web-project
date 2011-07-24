@@ -329,7 +329,7 @@ goApp.detailsMenu	= new ButtonMenu('button-details', 'button-details-menu');
 $('#menu-item-lines').click(function() {
 	$.window({
 		title: "Phone numbers groups for account:" + goApp.currentDeviceId,
-		url: "http://10.10.70.127:8080/admin/account_phonegroups/"+ goApp.currentDeviceId,
+		url: goApp.currentHostPort + "/admin/account_phonegroups/"+ goApp.currentDeviceId,
 		width: 800,
 		height: 550,
 		scrollable: false

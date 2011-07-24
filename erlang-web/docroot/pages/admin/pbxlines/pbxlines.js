@@ -304,7 +304,7 @@ goApp.detailsMenu	= new ButtonMenu('button-details', 'button-details-menu');
 $('#menu-item-lines').click(function() {
 	$.window({
 		title: "Lines for device " + goApp.currentDeviceId1,
-		url: "http://10.10.70.127:8080/admin/pbxlines/"+ goApp.currentDeviceId1
+		url: goApp.currentHostPort + "/admin/pbxlines/"+ goApp.currentDeviceId1
 	     });
 });
 
