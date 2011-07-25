@@ -1,12 +1,9 @@
 -module(controller_acd_rule_numbers).
 
--extends(controller_crud).
-
 -export([
-    create/0,
-    update/0,
-    delete/0,
-    select/0
+    handle/1,
+    get/1,
+    update/1
 ]).
 
 -include("account.hrl").
@@ -16,47 +13,94 @@
 -include("constants.hrl").
 -include("utils_controller_annotations.hrl").
 
-%%%
-%%% Controller JSON-actions.
-%%%
+?PROCESS_RESPONSE({}).  
+?AUTHORIZE(json).    
+handle(_Args) ->
+    RequestJSON = jsonutils:decode(wpart:fget("post:request")),
+    [Command|_] = jsonutils:get_attribute(RequestJSON, ?JSON_COMMANDS),
+    Response = {struct, [{?JSON_COMMANDS, action(jsonutils:get_attribute(Command, <<"type">>))}]},
+    wpart:fset(?KEY_RESPONSE, Response).
+    
+action(A) ->
+    {struct,[
+	{?JSON_TYPE, utils:to_binary(A)},
+	{<<"error">>, <<"unexpected action">>}]}.
 
-%%
-%%
-?PREPARE_DATA({}).
-?VALIDATE_DATA({}).
-create() -> ?BASE_MODULE:create().
+?AUTHORIZE(json).    
+get(_Args) ->
+    console:log(["ACD RULE NUMBERS GET"]),
+    AcdtId = utils:to_list(proplists:get_value(acdid, _Args)),
+    AcdtRd = utils:to_list(proplists:get_value(ruleid, _Args)),
+    console:log(["ACD RULE NUMBERS GET: ", AcdtId, AcdtRd]),
+    
+    Records = db:select(acd_rule_numbers, fun(#acd_rule_numbers{acd_rule_id=ACDRID}) when ACDRID=:=AcdtRd->true;(_)->false end),
+    
+    console:log(["ACD RULE NUMBERS GET: Records: ", Records]),
 
-%%
-%%
-?AUTHORIZE(json).
-?CHECK_EXISTENCE({}).
-?PREPARE_DATA({}).
-update() ->
-    console:log(["Action executed MT1:", {?MODULE, update}], 'DEBUG'),
-    console:log(["update, BASE_MODULE:", ?BASE_MODULE], 'DEBUG'),
-    ?BASE_MODULE:update().
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID,
+                utils:to_binary(O), utils:to_binary(FT),
+                utils:to_binary(N), utils:to_binary(TO), utils:to_binary(A)]}]}
+            || {_, ID, _, O, FT, N, TO, A} <- Records]}
+    ]},
 
-%%
-%%
-?AUTHORIZE(json).
-?CHECK_EXISTENCE({}).
-delete() -> ?BASE_MODULE:delete().
+    {content, text, mochijson2:encode(FR)}.
 
-?AUTHORIZE(json).
-select() ->
-    console:log(["LALALA Action executed:", {?MODULE, select}], 'DEBUG'),
-    Command = wpart:fget(?KEY_COMMAND_JSON),
-    RawFields = jsonutils:get_attribute(Command, ?TO_JSON_NAME(fields)),
-    console:log(["CAARN1: ", Command, RawFields], 'DEBUG'),
-    Fields = case RawFields of
-        undefined -> {exclude, []};
-        Value     -> {fields, Value}
+?AUTHORIZE(json).    
+update(_Args) ->
+    console:log(["ACD RULE NUMBERDS ADD"]),
+    %AcdtId      = proplists:get_value(acdid, _Args),
+    AcdtRd      = proplists:get_value(ruleid, _Args),
+    
+    ID          = wpart:fget("post:id"),
+    Oper        = wpart:fget("post:oper"),
+    Active      = wpart:fget("post:active"),
+    Order       = wpart:fget("post:order"),
+    ForwardType = wpart:fget("post:forward_type"),
+    Number      = wpart:fget("post:number"),
+    Timeout     = wpart:fget("post:timeout"),
+    
+    _ACDR = case Oper of
+        "update" ->
+            wtype_acd_rule_numbers:create(#acd_rule_numbers{
+                id          = utils:to_integer(ID),
+                acd_rule_id      = AcdtRd,
+                order            = Order,
+                forward_type     = ForwardType,
+                number           = Number,
+                timeout          = Timeout,
+                active           = Active
+            });    
+        "delete" -> wtype_acd_rules:delete(utils:to_integer(ID));
+        "add"    ->
+            wtype_acd_rule_numbers:create(#acd_rule_numbers{
+                acd_rule_id      = AcdtRd,
+                order            = Order,
+                forward_type     = ForwardType,
+                number           = Number,
+                timeout          = Timeout,
+                active           = Active
+            });
+        _ -> console:log(["UNKNOWN OPERATION:", Oper]), ok
     end,
-    console:log(["CAARN2: ", Fields], 'DEBUG'),
+    
+    Records = db:select(acd_rule_numbers, fun(#acd_rule_numbers{acd_rule_id=ACDRID}) when ACDRID=:=AcdtRd->true;(_)->false end),
+    
+    console:log(["ACD RULE NUMBERS GET: Records: ", Records]),
 
-    Rows = ?BASE_MODULE:get_rows(),
-    console:log(["CAARN3: ", Rows], 'DEBUG'),
-    FormattedRows = utils:format(acd_rule_numbers, Rows, Fields),
-    console:log(["CAARN4: ", FormattedRows], 'DEBUG'),
+    FR = {struct,[
+        {<<"page">>,1},
+        {<<"total">>,1},
+        {<<"records">>,length(Records)},
+        {<<"rows">>, [ {struct, [{<<"id">>,ID},
+            {<<"cell">>, [ID,
+                utils:to_binary(O), utils:to_binary(FT),
+                utils:to_binary(N), utils:to_binary(TO), utils:to_binary(A)]}]}
+            || {_, ID, _, O, FT, N, TO, A} <- Records]}
+    ]},
 
-    ?BASE_MODULE:process_selected_rows(FormattedRows).
+    {content, text, mochijson2:encode(FR)}.

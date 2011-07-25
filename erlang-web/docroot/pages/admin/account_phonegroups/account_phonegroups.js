@@ -195,13 +195,17 @@ function create_acdrule_grid(rule_id){
 				ids=0;
 				if(jQuery("#list10_d").jqGrid('getGridParam','records') >0 )
 				{
-					jQuery("#list10_d").jqGrid('setGridParam',{url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1});
-					jQuery("#list10_d").jqGrid('setCaption',"Invoice Detail: "+ids)
+					jQuery("#list10_d").jqGrid('setGridParam',
+					   {url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1,
+					    editurl:  "/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids+"/update"});
+					jQuery("#list10_d").jqGrid('setCaption',"Acd Numbers: "+ids)
 					.trigger('reloadGrid');
 				}
 			} else {
-				jQuery("#list10_d").jqGrid('setGridParam',{url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1});
-				jQuery("#list10_d").jqGrid('setCaption',"Invoice Detail: "+ids)
+				jQuery("#list10_d").jqGrid('setGridParam',
+				   {url:"/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids,page:1,
+				    editurl:  "/json/accounts/acd/rulenumbers/"+rule_id+"/"+ids+"/update"});
+				jQuery("#list10_d").jqGrid('setCaption',"Acd Numbers: "+ids)
 				.trigger('reloadGrid');			
 			}
 		},
@@ -227,16 +231,18 @@ function create_acdrule_grid(rule_id){
 			url: '/json/accounts/acd/rules/'+rule_id+'/delete'
 		},
 		{},{});
+	
 	jQuery("#list10_d").jqGrid({
 		height: 100,
 		datatype: "json",
-		colNames:['No','Item', 'Qty', 'Unit','Line Total'],
+		colNames:['ID','Order', 'Forward type', 'Number', 'TimeOut','Active'],
 		colModel:[
-			{name:'num',index:'num', width:55},
-			{name:'item',index:'item', width:180},
-			{name:'qty',index:'qty', width:80, align:"right"},
-			{name:'unit',index:'unit', width:80, align:"right"},		
-			{name:'linetotal',index:'linetotal', width:80,align:"right", sortable:false, search:false}
+			{name:'id',index:'id', width:80},
+			{name:'order',index:'order', width:80, editable:true, editrules:{required:true, integer:true}},
+			{name:'forward_type',index:'forward_type', width:180, editable:true, editrules:{required:true}, edittype:"select", editoptions:{ value: "E:Extension;N:Phone Number" }},
+			{name:'number',index:'number', width:150, editable:true, editrules:{required:true, integer:true}},
+			{name:'timeout',index:'timeout', width:100, editable:true, editrules:{required:true, integer:true}},
+			{name:'active',index:'active', width:80, sortable:false, search:false, edittype:"checkbox", editrules:{required:true}}
 		],
 		rowNum:5,
 		rowList:[5,10,20],
@@ -244,8 +250,28 @@ function create_acdrule_grid(rule_id){
 		sortname: 'item',
 		viewrecords: true,
 		sortorder: "asc",
-		multiselect: true
-	}).navGrid('#pager10_d',{add:false,edit:false,del:false});
+		caption: "acd numbers"
+	});
+	jQuery("#list10_d").jqGrid('navGrid',"#pager10_d",{edit:true,add:true,del:true},
+		{
+			zIndex:1234,
+			closeAfterEdit:true,
+			closeOnEscape:true
+			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/update"
+		},
+		{
+			closeAfterAdd:true,
+			saveData: "Data has been changed! Save changes?",
+			zIndex:1234,
+			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/add",
+			closeOnEscape:true
+		},
+		{
+			closeOnEscape:true,
+			zIndex:1234
+			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/delete"
+		},
+		{},{});
 
 }
 
