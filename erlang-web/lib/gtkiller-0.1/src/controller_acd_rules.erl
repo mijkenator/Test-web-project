@@ -36,7 +36,23 @@ get(_Args) ->
     AcdtId = utils:to_list(proplists:get_value(id, _Args)),
     console:log(["ACD RULES GET: ", AcdtId]),
     
-    Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    Sord   = utils:to_list(wpart:fget("get:sord")), % asc|desc
+    Sidx   = utils:to_list(wpart:fget("get:sidx")),  
+    console:log(["ACD RULES GET: ", AcdtId, Sord, Sidx]),
+    
+    Idx = case Sidx of
+        "priority"  -> 6;
+        _           -> 2
+    end,
+    Order = case Sord of
+        "asc" -> ascending;
+        _     -> descending
+    end,
+    
+    %Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
+    Records = db:select(acd_rules, [
+        {where, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end},
+        {order, {Idx, Order}}]),
     
     console:log(["ACD RULES GET: Records: ", Records]),
 

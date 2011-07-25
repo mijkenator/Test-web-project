@@ -15,26 +15,11 @@ function edit_acd_rules(AcdID)
 
 function acd_rules_dialog_acivate()
 {
-	$("#accordion").accordion({ clearStyle: true });
-	$('#b_acd_rule1, #b_acd_rule2').button();
-	$('#b_acd_rule1').click(function() { alert('1') });
-	$('#b_acd_rule2').click(function() {
-		var newAcdRuleId = getAccordionItemsCount() + 1;
-		$("#accordion").append('<h3 id="accordion_h_'+newAcdRuleId+'">New Acd Rule</h3>'+
-			'<div id="accordion_d_'+newAcdRuleId+'">'+getAccordionItemForm(newAcdRuleId)+'</div>').accordion('destroy').accordion()
-	});
 	//alert(goApp.currentAccountAcdId);
-	create_acdrule_grid(4);
+	create_acdrule_grid(goApp.currentAccountAcdId);
 }
 
-function getAccordionItemsCount() {
-	return $("#accordion").find("h3").filter(function(){ return this.id.substring(0,12) == 'accordion_h_'?true:false }).size()
-}
 
-function getAccordionItemForm(newAcdRuleId) {
-	var acdr_content = 'lalala ' + ' gugugugu';
-	return acdr_content
-}
 
 $(function(){
 	$.post("/json/phone_number",
@@ -179,10 +164,10 @@ function create_acdrule_grid(rule_id){
 		colNames:['ID', 'Priority', 'Name', 'Time Period', 'Active'],
 		colModel:[
 			{name:'id',index:'id', width:50},
-			{name:'priority',index:'order', width:100, editable:true, editrules:{required:true, integer:true}},
-			{name:'name',index:'forward_type', width:230, editable:true, editrules:{required:true}},
-			{name:'time_period',index:'number', width:230, align:"right", editable:true, edittype:"select", editoptions:{ value: "* * * * *:Always" },editrules:{required:true}},
-			{name:'active',index:'active', width:60,align:"right", editable:true, edittype:"checkbox", editrules:{required:true}}		
+			{name:'priority',index:'priority', width:100, editable:true, editrules:{required:true, integer:true}},
+			{name:'name',index:'forward_type', sortable:false, width:230, editable:true, editrules:{required:true}},
+			{name:'time_period',index:'number', sortable:false, width:230, align:"right", editable:true, edittype:"select", editoptions:{ value: "* * * * *:Always" },editrules:{required:true}},
+			{name:'active',index:'active', sortable:false, width:60,align:"right", editable:true, edittype:"checkbox", editrules:{required:true}}		
 		],
 		rowNum:10,
 		rowList:[10,20,30],
@@ -209,7 +194,12 @@ function create_acdrule_grid(rule_id){
 				.trigger('reloadGrid');			
 			}
 		},
-		height: 150
+		height: 150,
+		ondblClickRow: function(rowid){
+			jQuery(this).jqGrid('editGridRow', rowid, {
+				recreateForm:true,closeAfterEdit:true,
+				closeOnEscape:true, zIndex:1234});
+		}
 	});
 	jQuery("#list6").jqGrid('navGrid',"#pager6",{edit:true,add:true,del:true},
 		{
@@ -233,16 +223,16 @@ function create_acdrule_grid(rule_id){
 		{},{});
 	
 	jQuery("#list10_d").jqGrid({
-		height: 100,
+		height: 150,
 		datatype: "json",
 		colNames:['ID','Order', 'Forward type', 'Number', 'TimeOut','Active'],
 		colModel:[
 			{name:'id',index:'id', width:80},
 			{name:'order',index:'order', width:80, editable:true, editrules:{required:true, integer:true}},
-			{name:'forward_type',index:'forward_type', width:180, editable:true, editrules:{required:true}, edittype:"select", editoptions:{ value: "E:Extension;N:Phone Number" }},
-			{name:'number',index:'number', width:150, editable:true, editrules:{required:true, integer:true}},
-			{name:'timeout',index:'timeout', width:100, editable:true, editrules:{required:true, integer:true}},
-			{name:'active',index:'active', width:80, sortable:false, search:false, edittype:"checkbox", editrules:{required:true}}
+			{name:'forward_type',index:'forward_type', sortable:false, width:180, editable:true, editrules:{required:true}, edittype:"select", editoptions:{ value: "E:Extension;N:Phone Number;D:Device" }},
+			{name:'number',index:'number', width:150, sortable:false, editable:true, editrules:{required:true, integer:true}},
+			{name:'timeout',index:'timeout', width:100, sortable:false, editable:true, editrules:{required:true, integer:true}},
+			{name:'active',index:'active', width:80, sortable:false, search:false, edittype:"checkbox", editable:true, editrules:{required:true}}
 		],
 		rowNum:5,
 		rowList:[5,10,20],
@@ -250,26 +240,28 @@ function create_acdrule_grid(rule_id){
 		sortname: 'item',
 		viewrecords: true,
 		sortorder: "asc",
-		caption: "acd numbers"
+		caption: "acd numbers",
+		ondblClickRow: function(rowid){
+			jQuery(this).jqGrid('editGridRow', rowid, {
+				recreateForm:true,closeAfterEdit:true,
+				closeOnEscape:true, zIndex:1234});
+		}
 	});
 	jQuery("#list10_d").jqGrid('navGrid',"#pager10_d",{edit:true,add:true,del:true},
 		{
 			zIndex:1234,
 			closeAfterEdit:true,
 			closeOnEscape:true
-			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/update"
 		},
 		{
 			closeAfterAdd:true,
 			saveData: "Data has been changed! Save changes?",
 			zIndex:1234,
-			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/add",
 			closeOnEscape:true
 		},
 		{
 			closeOnEscape:true,
 			zIndex:1234
-			//url: "/json/accounts/acd/rulenumbers/"+rule_id+"/"+jQuery("#list6").jqGrid('getGridParam','selarrrow')+"/delete"
 		},
 		{},{});
 

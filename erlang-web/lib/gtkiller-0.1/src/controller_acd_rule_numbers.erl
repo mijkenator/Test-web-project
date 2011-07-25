@@ -31,9 +31,25 @@ get(_Args) ->
     console:log(["ACD RULE NUMBERS GET"]),
     AcdtId = utils:to_list(proplists:get_value(acdid, _Args)),
     AcdtRd = utils:to_list(proplists:get_value(ruleid, _Args)),
-    console:log(["ACD RULE NUMBERS GET: ", AcdtId, AcdtRd]),
+    Sord   = utils:to_list(wpart:fget("get:sord")), % asc|desc
+    Sidx   = utils:to_list(wpart:fget("get:sidx")),  
+    console:log(["ACD RULE NUMBERS GET: ", AcdtId, AcdtRd, Sord, Sidx]),
     
-    Records = db:select(acd_rule_numbers, fun(#acd_rule_numbers{acd_rule_id=ACDRID}) when ACDRID=:=AcdtRd->true;(_)->false end),
+    Idx = case Sidx of
+        "order"  -> 4;
+        _        -> 2
+    end,
+    Order = case Sord of
+        "asc" -> ascending;
+        _     -> descending
+    end,
+    
+    console:log(["ACD RULE NUMBERS ORDER: ", Idx, Order]),
+    
+    %Records = db:select(acd_rule_numbers, fun(#acd_rule_numbers{acd_rule_id=ACDRID}) when ACDRID=:=AcdtRd->true;(_)->false end),
+    Records = db:select(acd_rule_numbers, [
+        {where, fun(#acd_rule_numbers{acd_rule_id=ACDRID}) when ACDRID=:=AcdtRd->true;(_)->false end},
+        {order, {Idx, Order}}]),
     
     console:log(["ACD RULE NUMBERS GET: Records: ", Records]),
 
@@ -52,7 +68,7 @@ get(_Args) ->
 
 ?AUTHORIZE(json).    
 update(_Args) ->
-    console:log(["ACD RULE NUMBERDS ADD"]),
+    console:log(["ACD RULE NUMBERDS ADD/DEL/EDIT"]),
     %AcdtId      = proplists:get_value(acdid, _Args),
     AcdtRd      = proplists:get_value(ruleid, _Args),
     
@@ -64,9 +80,11 @@ update(_Args) ->
     Number      = wpart:fget("post:number"),
     Timeout     = wpart:fget("post:timeout"),
     
+    console:log(["ACD RULE NUMBERDS ADD/DEL/EDIT OPER: ", Oper, utils:to_integer(ID)]),
+    
     _ACDR = case Oper of
-        "update" ->
-            wtype_acd_rule_numbers:create(#acd_rule_numbers{
+        "edit"   ->
+            wtype_acd_rule_numbers:update(#acd_rule_numbers{
                 id          = utils:to_integer(ID),
                 acd_rule_id      = AcdtRd,
                 order            = Order,
@@ -75,7 +93,7 @@ update(_Args) ->
                 timeout          = Timeout,
                 active           = Active
             });    
-        "delete" -> wtype_acd_rules:delete(utils:to_integer(ID));
+        "del"    -> wtype_acd_rule_numbers:delete(utils:to_integer(ID));
         "add"    ->
             wtype_acd_rule_numbers:create(#acd_rule_numbers{
                 acd_rule_id      = AcdtRd,
