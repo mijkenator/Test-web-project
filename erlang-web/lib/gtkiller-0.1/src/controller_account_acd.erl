@@ -96,8 +96,7 @@ action("save")    ->
         end, NewAcds)),
     
     {struct,[
-	{?JSON_TYPE, <<"save">>},
-	{?JSON_DATA, <<"cococo">>}]};   
+	{?JSON_TYPE, <<"save">>}]};   
 action("select")  ->
     RequestJSON = jsonutils:decode(wpart:fget("post:request")),
     [Command|_] = jsonutils:get_attribute(RequestJSON, ?JSON_COMMANDS),

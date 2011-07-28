@@ -24,7 +24,7 @@ get_record_info(acd_types) -> #acd_types{}.
 create(Arg) ->
 
     Acd0 = Arg#acd{
-        id = db:get_next_id_if(acd, Arg)
+        id = e_db:get_next_id(acd)
     },
     AcdID = case element(3,Acd0) of
         undefined -> e_db:get_next_id(acd_id);

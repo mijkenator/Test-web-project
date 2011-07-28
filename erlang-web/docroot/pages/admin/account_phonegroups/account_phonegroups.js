@@ -45,7 +45,7 @@ $(function(){
 		  }
 		}
 	      );
-	$('#b_create_acd, #b_save_acds, #b_cancel_acds').button();
+	$('#b_create_acd, #b_save_acds').button();
 	$('#b_create_acd').click(function() {
 	   var NewSortableId = get_acd_count()+1;
 	   $('#div_acds').append($('<ul id="sortable'+NewSortableId+'" class="connectedSortable"><li class="emptyMessage">ACD</li></ul>'));
@@ -82,7 +82,7 @@ $(function(){
 		      acds: acds_obj,
 		      account_id:goApp.currentAccountId
 		      }]}) },
-		  function(data){alert("SAVE response: " + data)}
+		  function(data){alert("SAVED")}
 		);
 	});	
 	// get users acd and data
