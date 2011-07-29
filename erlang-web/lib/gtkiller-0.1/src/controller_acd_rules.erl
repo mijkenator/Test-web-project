@@ -61,8 +61,8 @@ get(_Args) ->
         {<<"total">>,1},
         {<<"records">>,length(Records)},
         {<<"rows">>, [ {struct, [{<<"id">>,ID},
-            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
-            || {_, ID, _, Name, TP, P, A} <- Records]}
+            {<<"cell">>, [ID, AccID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, AccID, Name, TP, P, A} <- Records]}
     ]},
 
     {content, text, mochijson2:encode(FR)}.
@@ -75,9 +75,11 @@ add(_Args) ->
     Name        = wpart:fget("post:name"),
     Priority    = wpart:fget("post:priority"),
     TimePeriod  = wpart:fget("post:time_period"),
+    AccountId   = wpart:fget("post:account_id"),
     
     ACDR = wtype_acd_rules:create(#acd_rules{
         acd_id      = AcdtId,
+        account_id  = utils:to_integer(AccountId),
         name        = Name,
         time_period = TimePeriod,
         priority    = Priority,
@@ -95,8 +97,8 @@ add(_Args) ->
         {<<"total">>,1},
         {<<"records">>,length(Records)},
         {<<"rows">>, [ {struct, [{<<"id">>,ID},
-            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
-            || {_, ID, _, Name, TP, P, A} <- Records]}
+            {<<"cell">>, [ID, AccID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, AccID, Name, TP, P, A} <- Records]}
     ]},
 
     {content, text, mochijson2:encode(FR)}.
@@ -118,8 +120,8 @@ delete(_Args) ->
         {<<"total">>,1},
         {<<"records">>,length(Records)},
         {<<"rows">>, [ {struct, [{<<"id">>,ID},
-            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
-            || {_, ID, _, Name, TP, P, A} <- Records]}
+            {<<"cell">>, [ID, AccID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, AccID, Name, TP, P, A} <- Records]}
     ]},
 
     {content, text, mochijson2:encode(FR)}.
@@ -134,10 +136,12 @@ update(_Args) ->
     Name        = wpart:fget("post:name"),
     Priority    = wpart:fget("post:priority"),
     TimePeriod  = wpart:fget("post:time_period"),
+    AccountId   = wpart:fget("post:account_id"),
     
     ACDR = wtype_acd_rules:update(#acd_rules{
         id          = utils:to_integer(ID),
         acd_id      = AcdtId,
+        account_id  = utils:to_integer(AccountId),
         name        = Name,
         time_period = TimePeriod,
         priority    = Priority,
@@ -153,8 +157,8 @@ update(_Args) ->
         {<<"total">>,1},
         {<<"records">>,length(Records)},
         {<<"rows">>, [ {struct, [{<<"id">>,ID},
-            {<<"cell">>, [ID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
-            || {_, ID, _, Name, TP, P, A} <- Records]}
+            {<<"cell">>, [ID, AccID, utils:to_binary(P), utils:to_binary(Name), utils:to_binary(TP), utils:to_binary(A)]}]}
+            || {_, ID, _, AccID, Name, TP, P, A} <- Records]}
     ]},
 
     {content, text, mochijson2:encode(FR)}.

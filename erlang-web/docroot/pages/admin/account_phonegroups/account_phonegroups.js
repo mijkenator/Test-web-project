@@ -161,9 +161,10 @@ function create_acdrule_grid(rule_id){
 	jQuery("#list6").jqGrid({        
 		url:'/json/accounts/acd/rules/'+rule_id,
 		datatype: "json",
-		colNames:['ID', 'Priority', 'Name', 'Time Period', 'Active'],
+		colNames:['ID', 'AccountID', 'Priority', 'Name', 'Time Period', 'Active'],
 		colModel:[
 			{name:'id',index:'id', width:50},
+			{name:'account_id',index:'account_id', hidden:true, width:50, editable:true, editoptions:{defaultValue:goApp.currentAccountId, required:true}},
 			{name:'priority',index:'priority', width:100, editable:true, editrules:{required:true, integer:true}},
 			{name:'name',index:'forward_type', sortable:false, width:230, editable:true, editrules:{required:true}},
 			{name:'time_period',index:'number', sortable:false, width:230, align:"right", editable:true, edittype:"select", editoptions:{ value: "* * * * *:Always" },editrules:{required:true}},

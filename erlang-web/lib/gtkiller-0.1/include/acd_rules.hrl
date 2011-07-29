@@ -1,6 +1,7 @@
 -record(acd_rules, {
     id,
     acd_id,
+    account_id,
     name,
     time_period,
     priority,
@@ -13,6 +14,7 @@
         {private, true}
     ]},
     acd_id = {integer, [{description, "Acd id"}]},
+    account_id = {integer, [{description, "Account id"}]},
     name =  {string, [
         {description, "Name"},
         {max_length, 255}
