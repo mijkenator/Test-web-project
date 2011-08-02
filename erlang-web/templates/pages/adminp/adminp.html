@@ -13,9 +13,10 @@
     <link type="text/css" rel="stylesheet" href="/css/private.css" />
     <link type="text/css" rel="stylesheet" href="/css/admin.css" />
     <link type="text/css" rel="stylesheet" href="/css/jquery.window.css" />
+
     <!-- jquery libs-->
     <script type="text/javascript" src="/lib/external/jquery-1.4.2.min.js"> </script>
-    <script type="text/javascript" src="/lib/external/jquery-ui-1.8.5.custom.min.js"> </script>
+    <script type="text/javascript" src="/lib/external/jquery-ui-1.8.13.custom.min.js"> </script>
     <script type="text/javascript" src="/lib/external/grid.locale-en.js"> </script>
     <script type="text/javascript">
         jQuery.jgrid.no_legacy_api = true;
@@ -32,6 +33,7 @@
     <script type="text/javascript" src="/lib/button-menu.js"> </script>
     <script type="text/javascript" src="/pages/general.js"> </script>
     <script type="text/javascript" src="/jquery.window.min.js"> </script>
+
     <script type="text/javascript">
         goApp.account  = <wpart:choose><wpart:when test="{account_info} eq undefined">{}</wpart:when><wpart:otherwise><wpart:lookup key="account_info" /></wpart:otherwise></wpart:choose>;
         goApp.currentHostPort = "<wpart:lookup key="current_host_port" />";

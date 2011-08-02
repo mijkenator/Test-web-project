@@ -83,6 +83,7 @@ goApp.get_accounts = function()
 	}, function(O){});
 };
 
+goApp.currentPNG = [];
 goApp.AccountMData = [];
 //goApp.get_accounts();
 
@@ -327,13 +328,14 @@ $('#button-details').button({
  */
 goApp.detailsMenu	= new ButtonMenu('button-details', 'button-details-menu');
 $('#menu-item-lines').click(function() {
-	$.window({
+	var sampleWnd = $.window({
 		title: "Phone numbers groups for account:" + goApp.currentDeviceId,
 		url: goApp.currentHostPort + "/admin/account_phonegroups/"+ goApp.currentDeviceId,
 		width: 800,
 		height: 550,
 		scrollable: false
 	     });
+	goApp.currentPNG[goApp.currentDeviceId] = sampleWnd;
 });
 
 

@@ -37,8 +37,14 @@ get(_Args) ->
     console:log(["ACD RULES GET: ", AcdtId]),
     
     Sord   = utils:to_list(wpart:fget("get:sord")), % asc|desc
-    Sidx   = utils:to_list(wpart:fget("get:sidx")),  
-    console:log(["ACD RULES GET: ", AcdtId, Sord, Sidx]),
+    Sidx   = utils:to_list(wpart:fget("get:sidx")),
+    AccId  = utils:to_integer(wpart:fget("get:said")),
+    
+    console:log(["ACD RULES ACCID: ", wpart:fget("get:said"), wpart:fget("get:nd"),
+        wpart:fget("get:rows"), wpart:fget("get:_search"),
+        wpart:fget("get:said1"),wpart:fget("get:said2")]),
+    
+    console:log(["ACD RULES GET (4): ", AcdtId, Sord, Sidx, AccId]),
     
     Idx = case Sidx of
         "priority"  -> 6;
@@ -51,7 +57,7 @@ get(_Args) ->
     
     %Records = db:select(acd_rules, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end),
     Records = db:select(acd_rules, [
-        {where, fun(#acd_rules{acd_id=ACDID}) when ACDID=:=AcdtId->true;(_)->false end},
+        {where, fun(#acd_rules{acd_id=ACDID,account_id=ACCID}) when ACDID=:=AcdtId,ACCID=:=AccId->true;(_)->false end},
         {order, {Idx, Order}}]),
     
     console:log(["ACD RULES GET: Records: ", Records]),

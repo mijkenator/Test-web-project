@@ -45,7 +45,7 @@ $(function(){
 		  }
 		}
 	      );
-	$('#b_create_acd, #b_save_acds').button();
+	$('#b_create_acd, #b_save_acds, #b_test_acds').button();
 	$('#b_create_acd').click(function() {
 	   var NewSortableId = get_acd_count()+1;
 	   $('#div_acds').append($('<ul id="sortable'+NewSortableId+'" class="connectedSortable"><li class="emptyMessage">ACD</li></ul>'));
@@ -57,6 +57,16 @@ $(function(){
 	   });
 	   
 	});
+	$('#b_test_acds').click(function() {
+		//alert('CURRENT ACC: ' + goApp.currentAccountId);
+		//alert('Current WND: ' + parent.goApp.currentPNG[goApp.currentAccountId]),
+		//alert('WINID: '  + parent.goApp.currentPNG[goApp.currentAccountId].getWindowId());
+		//alert('PARENT: ' + parent.goApp.currentPNG[goApp.currentAccountId].getCaller());
+		//alert('WURL: '   + parent.goApp.currentPNG[goApp.currentAccountId].getUrl());
+		//parent.goApp.currentPNG[goApp.currentAccountId].getContent();
+		window.location.reload();
+	});
+	
 	$('#b_save_acds').click(function() {
 		var acds_obj = new Array();
 		$('ul.connectedSortable').each(function(i,l) {
@@ -82,7 +92,7 @@ $(function(){
 		      acds: acds_obj,
 		      account_id:goApp.currentAccountId
 		      }]}) },
-		  function(data){alert("SAVED")}
+		  function(data){ window.location.reload();}
 		);
 	});	
 	// get users acd and data
@@ -153,9 +163,18 @@ $(function(){
 		};
 	$("#example").dialog(dialogOpts);	//end dialog
 	
-	$("#accordion").accordion({ clearStyle: true });
+	//$("#accordion").accordion({ clearStyle: true });
+	
+	var data = "Core Selectors Attributes Traversing Manipulation CSS Events Effects Ajax Utilities".split(" ");
+	$("#exampleMMM").autocomplete(data);
 });
 
+function myfwdtypecheck(value, colname)
+{
+	alert("lalalalal");
+	//alert(value + ' -- ' +colname);
+	return [true, ""];
+}
 
 function create_acdrule_grid(rule_id){
 	jQuery("#list6").jqGrid({        
@@ -170,6 +189,7 @@ function create_acdrule_grid(rule_id){
 			{name:'time_period',index:'number', sortable:false, width:230, align:"right", editable:true, edittype:"select", editoptions:{ value: "* * * * *:Always" },editrules:{required:true}},
 			{name:'active',index:'active', sortable:false, width:60,align:"right", editable:true, edittype:"checkbox", editrules:{required:true}}		
 		],
+		postData:{said1:goApp.currentAccountId,said:goApp.currentAccountId},
 		rowNum:10,
 		rowList:[10,20,30],
 		pager: '#pager6',
@@ -197,6 +217,7 @@ function create_acdrule_grid(rule_id){
 		},
 		height: 150,
 		ondblClickRow: function(rowid){
+			jQuery("#list6").jqGrid('setGridParam',{editurl:'/json/accounts/acd/rules/'+rule_id+'/update'});
 			jQuery(this).jqGrid('editGridRow', rowid, {
 				recreateForm:true,closeAfterEdit:true,
 				closeOnEscape:true, zIndex:1234});
@@ -230,7 +251,48 @@ function create_acdrule_grid(rule_id){
 		colModel:[
 			{name:'id',index:'id', width:80},
 			{name:'order',index:'order', width:80, editable:true, editrules:{required:true, integer:true}},
-			{name:'forward_type',index:'forward_type', sortable:false, width:180, editable:true, editrules:{required:true}, edittype:"select", editoptions:{ value: "E:Extension;N:Phone Number;D:Device" }},
+			//{name:'forward_type',index:'forward_type', sortable:false, width:180, editable:true, editrules:{required:true}, edittype:"select", editoptions:{ value: "E:Extension;N:Phone Number;D:Device" }},
+			{name:'forward_type',index:'forward_type', sortable:false, width:180, editable:true,
+				editrules:{required:true}, edittype:"select",
+				editoptions:{
+				   value: "E:Extension;N:Phone Number;D:Device",
+				   dataInit: function (elem) {
+				      var v = $(elem).val();
+				      if(v == 'D'){
+					jQuery("#list10_d").jqGrid('setColProp', 'number',
+					   { edittype:"select", editoptions: { value: "1:DEV1;2:DEV2;3:DEV3"} });
+				      }
+				   },
+				   dataEvents: [
+				      {
+					type: 'change',
+					fn: function (e) {
+					   var v = $(e.target).val();
+					   var form = $(e.target).closest('form.FormGrid');
+					   if(v == 'D'){
+						var rmele = $("#number.FormElement", form[0]);
+						var parent = rmele.parent();
+						rmele.remove();
+						parent.append("<select id='number' class='FormElement' name='number' role='select'>"+ getAccountDevicesOptionStr(goApp.currentAccountId) +"</select>")
+					   }else{
+						var rmele = $("#number.FormElement", form[0]);
+						var parent = rmele.parent();
+						rmele.remove();
+						parent.append("<input type='text' id='number' class='FormElement' name='number' role='textbox'>")
+					   }
+					}
+				      }
+				   ]
+			}},
+			//{name:'number',index:'number', width:150, sortable:false, editable:true, editoptions: {
+			//  dataInit: function(elem) {
+			//    $(elem).autocomplete({
+			//	source: function(req, responseFn) {
+			//		var a = ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"];
+			//		responseFn( a );	
+			//	}
+			//    });}
+			//}, editrules:{required:true, integer:true}},
 			{name:'number',index:'number', width:150, sortable:false, editable:true, editrules:{required:true, integer:true}},
 			{name:'timeout',index:'timeout', width:100, sortable:false, editable:true, editrules:{required:true, integer:true}},
 			{name:'active',index:'active', width:80, sortable:false, search:false, edittype:"checkbox", editable:true, editrules:{required:true}}

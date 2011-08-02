@@ -1,5 +1,5 @@
 -module(index).
--export([public/1, admin/1, user/1, index/1, adminp/1, admin_acc_phg/1, acdrules/1]).
+-export([public/1, admin/1, user/1, index/1, adminp/1, admin_acc_phg/1, acdrules/1, mmmtest/1]).
 
 -include("account.hrl").
 -include("utils_controller_annotations.hrl").
@@ -41,6 +41,11 @@ public(_Args) ->
 ?AUTHORIZE(normal).
 user(_Args) ->
     render("user").
+
+?AUTHORIZE(admin).
+mmmtest(_Args) ->
+    console:log(["ADMIN RENDER: ", wpart:fget("__path")]),
+    render("admin").
 
 ?AUTHORIZE(admin).
 admin(_Args) ->
