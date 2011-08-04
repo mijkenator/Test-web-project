@@ -52,7 +52,7 @@ goApp.get_account_name_by_id = function(sValue)
 goApp.get_accounts = function()
 {
 	var
-		oRequest	= new Request('/json/reseller'),
+		oRequest	= new Request('/json/accounts'),
 		oCommand	= {
 			type: 'select',
 			needTotalSize: true,

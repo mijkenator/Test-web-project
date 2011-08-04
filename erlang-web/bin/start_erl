@@ -22,4 +22,4 @@ export BINDIR
 export PROGNAME
 export RELDIR
 
-exec $BINDIR/erlexec -boot $RELDIR/$VSN/start -config $RELDIR/$VSN/sys -heart -env HEART_BEAT_TIMEOUT 30 -pa /usr/lib64/erlang/lib/tools-2.6.6.3/ebin -pa patches +K true -sname $HOSTNAME -smp auto +P 262140 ${1+"$@"}
+exec $BINDIR/erlexec -boot $RELDIR/$VSN/start -config $RELDIR/$VSN/sys -heart -env HEART_BEAT_TIMEOUT 30 -pa /usr/lib64/erlang/lib/tools-2.6.6.4/ebin -pa patches +K true -sname $HOSTNAME -smp auto +P 262140 ${1+"$@"}

@@ -255,13 +255,9 @@ function create_acdrule_grid(rule_id){
 			{name:'forward_type',index:'forward_type', sortable:false, width:180, editable:true,
 				editrules:{required:true}, edittype:"select",
 				editoptions:{
-				   value: "E:Extension;N:Phone Number;D:Device",
-				   dataInit: function (elem) {
-				      var v = $(elem).val();
-				      if(v == 'D'){
-					jQuery("#list10_d").jqGrid('setColProp', 'number',
-					   { edittype:"select", editoptions: { value: "1:DEV1;2:DEV2;3:DEV3"} });
-				      }
+				   value: "N:Phone Number;E:Extension;D:Device",
+				   dataInit: function (e) {
+					setTimeout(function(){ $(e).trigger('change'); },20);
 				   },
 				   dataEvents: [
 				      {
@@ -269,16 +265,20 @@ function create_acdrule_grid(rule_id){
 					fn: function (e) {
 					   var v = $(e.target).val();
 					   var form = $(e.target).closest('form.FormGrid');
-					   if(v == 'D'){
-						var rmele = $("#number.FormElement", form[0]);
-						var parent = rmele.parent();
-						rmele.remove();
-						parent.append("<select id='number' class='FormElement' name='number' role='select'>"+ getAccountDevicesOptionStr(goApp.currentAccountId) +"</select>")
-					   }else{
-						var rmele = $("#number.FormElement", form[0]);
-						var parent = rmele.parent();
-						rmele.remove();
-						parent.append("<input type='text' id='number' class='FormElement' name='number' role='textbox'>")
+					   //console.log(form);
+					   var rmele = $("#number.FormElement", form[0]);
+					   var parent = rmele.parent();
+					   rmele.remove();
+					   switch (v)
+					   {
+						case 'D':
+							getAccountDevicesOptionStr(goApp.currentAccountId, parent);
+							break;
+						case 'E':
+							getAccountExtensionsOptionStr(goApp.currentAccountId, parent);
+							break;
+						default:
+							parent.append("<input type='text' id='number' class='FormElement' name='number' role='textbox'>")
 					   }
 					}
 				      }
@@ -293,7 +293,14 @@ function create_acdrule_grid(rule_id){
 			//	}
 			//    });}
 			//}, editrules:{required:true, integer:true}},
-			{name:'number',index:'number', width:150, sortable:false, editable:true, editrules:{required:true, integer:true}},
+			{name:'number',index:'number', width:150, sortable:false, editable:true,
+				editrules:{required:true, integer:true},
+				editoptions:{
+				   dataInit: function (e) {
+					goApp.currentFormNumberValueFE = $(e).val();
+				   }
+				}
+			},
 			{name:'timeout',index:'timeout', width:100, sortable:false, editable:true, editrules:{required:true, integer:true}},
 			{name:'active',index:'active', width:80, sortable:false, search:false, edittype:"checkbox", editable:true, editrules:{required:true}}
 		],
@@ -314,13 +321,15 @@ function create_acdrule_grid(rule_id){
 		{
 			zIndex:1234,
 			closeAfterEdit:true,
-			closeOnEscape:true
+			closeOnEscape:true,
+			recreateForm:true
 		},
 		{
 			closeAfterAdd:true,
 			saveData: "Data has been changed! Save changes?",
 			zIndex:1234,
-			closeOnEscape:true
+			closeOnEscape:true,
+			recreateForm:true
 		},
 		{
 			closeOnEscape:true,
@@ -330,4 +339,51 @@ function create_acdrule_grid(rule_id){
 
 }
 
+function getAccountDevicesOptionStr(AccountID, parent)
+{
+	$.post("/json/device",
+		{ request: JSON.stringify({
+		   commands:[{
+		      type:"get_account_lines",
+		      account_id: AccountID
+		      }]}) },
+		function(data){
+		  //alert("Data Loaded: " + data);
+		  var obj = jQuery.parseJSON(data);
+		  var str = "";
+		  if(obj.commands[0].data){
+			$.each(obj.commands[0].data, function(index, value){
+				var selflag = "";
+				if(goApp.currentFormNumberValueFE == value[1]){selflag="selected"}
+				str += "<option value='"+value[1]+"' "+ selflag +">"+ value[0] +"</option>"
+			})
+		  }
+		  parent.append("<select id='number' class='FormElement' name='number' role='select'>"+ str +"</select>")
+		}
+	      );
+}
+
+function getAccountExtensionsOptionStr(AccountID, parent)
+{
+	$.post("/json/phone_number",
+		{ request: JSON.stringify({
+		   commands:[{
+		      type:"get_extensions",
+		      account_id: AccountID
+		      }]}) },
+		function(data){
+		  //alert("Data Loaded: " + data);
+		  var obj = jQuery.parseJSON(data);
+		  var str = "";
+		  if(obj.commands[0].data){
+			$.each(obj.commands[0].data, function(index, value){
+				var selflag = "";
+				if(goApp.currentFormNumberValueFE == value[1]){selflag="selected"}
+				str += "<option value='"+value[1]+"' "+ selflag +">"+ value[0] +"</option>"
+			})
+		  }
+		  parent.append("<select id='number' class='FormElement' name='number' role='select'>"+ str +"</select>")
+		}
+	      );
+}
 

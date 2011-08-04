@@ -12,11 +12,13 @@
     prepare_initial/0,
     prepare_validated/0,
     prepare_edit/1,
-    format/1
+    format/1,
+    get_account_all_lines/1
 ]).
 
 -include("device_line.hrl").
 -include("device.hrl").
+-include_lib("stdlib/include/qlc.hrl").
 
 get_record_info(device_line) -> record_info(fields, device_line);
 get_record_info(device_line_types) -> #device_line_types{}.
@@ -69,3 +71,15 @@ prepare_edit(Item) ->
 
 format(Item) ->
     [{"id", Item#device_line.id},{"name", Item#device_line.name}].
+    
+get_account_all_lines(AccountID) ->    
+    Q = qlc:q([ {utils:to_binary(D#device.name ++ " -- " ++ L#device_line.name), L#device_line.id} ||
+         D <- mnesia:table(device)
+        ,L <- mnesia:table(device_line)
+        ,D#device.id =:= L#device_line.device_id, D#device.account_id =:= AccountID ]),
+    case mnesia:transaction(fun() ->  qlc:e(Q) end) of
+        {atomic, L} -> lists:sort(fun({A,_},{B,_})-> A < B end, L);
+        Error       -> {error, Error}
+    end.
+    
+    

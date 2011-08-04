@@ -15,7 +15,8 @@
     format/1,
     
     freez_number/2,
-    free_number/1
+    free_number/1,
+    get_org_all_extensions/1
 ]).
 
 -include("phone_number.hrl").
@@ -101,3 +102,9 @@ free_number(Number) ->
         [R] -> update(R#phone_number{account_id=0});
         _   -> ok
     end.
+    
+get_org_all_extensions(OrgID) ->
+    lists:sort(fun([A|_], [B|_]) -> A < B end,
+        [ [utils:to_binary(N), ID] ||
+        #phone_number{id=ID, number=N}<- db:select(phone_number,
+            fun(#phone_number{organization_id=OID,type=T}) when OID=:=OrgID,T=:="extension"-> true;(_)-> false end)]).

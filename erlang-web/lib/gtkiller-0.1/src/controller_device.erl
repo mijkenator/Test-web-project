@@ -6,8 +6,8 @@
     create/0,
     update/0,
     delete/0,
-    select/0
-
+    select/0,
+    get_account_lines/0
 ]).
 
 -include("device.hrl").
@@ -54,4 +54,13 @@ select() ->
     FormattedRows = utils:format(device, Rows, Fields),
 
     ?BASE_MODULE:process_selected_rows(FormattedRows).
+    
+?AUTHORIZE(json).
+get_account_lines() ->
+    console:log(["GAL Action executed:", {?MODULE, get_account_lines}], 'DEBUG'),
+    Command = wpart:fget(?KEY_COMMAND_JSON),
+    AccountID   = jsonutils:get_attribute(Command, <<"account_id">>),
+ 
+    [{<<"data">>, [ [DevName, LineId] || {DevName, LineId} <- wtype_device_line:get_account_all_lines(AccountID)]}].
+
 
